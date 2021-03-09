@@ -1,0 +1,39 @@
+{
+    "name": "Taobao Saver Chrome Extension",
+    "description": "Automatically download and store data from Taobao & Tmall",
+    "version": "1.0",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": "/img/favicon.png"
+    },
+    "icons": {
+        "16": "/img/favicon.png",
+        "32": "/img/favicon.png",
+        "48": "/img/favicon.png",
+        "128": "/img/favicon.png"
+    },
+    "content_scripts": [{
+        "matches": ["*://*.taobao.com/*", "*://*.tmall.com/*"],
+        "js": ["contentScript.js"]
+    }],
+    "permissions": [
+        "identity"
+    ],
+    "host_permissions": [
+        "https://script.google.com/*"
+    ],
+    "web_accessible_resources": [{
+        "resources": ["taobao.js", "tmall.js", "img/loading.svg"],
+        "matches": ["*://*.taobao.com/*", "*://*.tmall.com/*"],
+        "extension_ids": ["cooallhhldemmfihmjgeicfbncelhfog"]
+    }],
+    "externally_connectable": {
+        "matches": [
+            "*://*.taobao.com/*", "*://*.tmall.com/*"
+        ]
+    }
+}
