@@ -39,9 +39,9 @@ function writeToDatabase(PAYLOAD = TEST_PAYLOAD) {
 
     const ITEM_VARIATION = PAYLOAD.variation;
 
-    const SKU = ITEM_VARIATION.map(e => [e.sku.replace(/;/g, "s")]);
-    const VARIABLE1 = ITEM_VARIATION.map(e => [e.variable1Name, e.variable1Value]);
-    const VARIABLE2 = ITEM_VARIATION.map(e => [e.variable2Name, e.variable2Value]);
+    const SKU = ITEM_VARIATION.map(e => ['srrw' + e.sku.replace(/;$/g, "").replace(/;/g, "_")]);
+    const VARIABLE1 = ITEM_VARIATION.map(e => [translate(e.variable1Name), translate(e.variable1Value)]);
+    const VARIABLE2 = ITEM_VARIATION.map(e => [translate(e.variable2Name), translate(e.variable2Value)]);
     const PROMOTION_PRICE = ITEM_VARIATION.map(e => [e.promotionPrice]);
 
     SHEET.getRange(`D${LAST_ROW+1}:D${LAST_ROW+NUMBER_OF_ITEM}`).setValues(SKU);

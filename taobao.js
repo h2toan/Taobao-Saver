@@ -1,13 +1,13 @@
-(function waitForProductObjectReady() {
+(function waitForDataReady() {
     if (g_config.sibRequest) {
         document.getElementById("J_tbExtra").innerHTML += '<div id="sendDataTrigger" onclick="sendDataToSheet()" style="width:200px;text-align:center;padding:10px;background:#f44408;color:white;cursor:pointer;">Send This Item To Sheet</div>';
-    } else setTimeout(waitForProductObjectReady, 5E3);
+    } else setTimeout(waitForDataReady, 5E3);
 })();
 
 async function sendDataToSheet() {
     document.getElementById('sendDataTrigger').innerHTML = '<img src="chrome-extension://cooallhhldemmfihmjgeicfbncelhfog/img/loading.svg">';
     try {
-        const PAY_LOAD = parseProductObject(g_config.sibRequest);
+        const PAY_LOAD = prepareProductItem();
         await fetch('https://script.google.com/macros/s/AKfycbyMgBYIEkjqgWCTS_v35feyNBC0JtBROS8dQsEuDrptg4yE1Lqmuykrjw/exec', {
             method: 'POST',
             mode: 'no-cors',
@@ -21,14 +21,20 @@ async function sendDataToSheet() {
     }
 }
 
-function parseProductObject(object) {
-    const DATA = object.data;
-    const SKU = DATA.dynStock.sku;
-    const SKU_KEY_NAMES = Object.keys(SKU)
-
+function prepareProductItem() {
     let productItem = {};
     productItem.imageList = getImageSrcList();
-    productItem.variation = [];
+    productItem.variation = getVaration(g_config.sibRequest);
+
+    return productItem
+}
+
+function getVaration(productObject) {
+    const DATA = productObject.data;
+    const SKU = DATA.dynStock.sku;
+    const SKU_KEY_NAMES = Object.keys(SKU);
+
+    let variation = [];
 
     for (let index = 0; index < SKU_KEY_NAMES.length; index++) {
         let productVariationUnit = {};
@@ -44,10 +50,9 @@ function parseProductObject(object) {
         productVariationUnit.originalPrice = DATA.originalPrice[skuUnit].price;
         productVariationUnit.promotionPrice = DATA.promotion.promoData[skuUnit][0].price;
 
-        productItem.variation.push(productVariationUnit);
+        variation.push(productVariationUnit);
     }
-
-    return productItem
+    return variation
 }
 
 function getPropertyList() {
@@ -83,7 +88,7 @@ function getImageSrcList() {
     const SRC_LIST = [];
 
     for (let index = 0; index < IMAGE_NODE_LIST.length; index++) {
-        const SRC = IMAGE_NODE_LIST[index].src.replace('_50x50.jpg_.webp', '');
+        const SRC = IMAGE_NODE_LIST[index].src.replace(/_\d+x\d+\.jpg.*/, '');
         SRC_LIST.push(SRC);
     }
     return SRC_LIST;
