@@ -39,9 +39,13 @@ function writeToDatabase(PAYLOAD = TEST_PAYLOAD) {
 
     const ITEM_VARIATION = PAYLOAD.variation;
 
+    updateDictionary(ITEM_VARIATION);
+
     const SKU = ITEM_VARIATION.map(e => ['srrw' + e.sku.replace(/;$/g, "").replace(/;/g, "_")]);
-    const VARIABLE1 = ITEM_VARIATION.map(e => [translate(e.variable1Name), translate(e.variable1Value)]);
-    const VARIABLE2 = ITEM_VARIATION.map(e => [translate(e.variable2Name), translate(e.variable2Value)]);
+
+    const VARIABLE1 = ITEM_VARIATION.map(e => [`=VLOOKUP("${e.variable1Name}",DICTIONARY!A:B,2,FALSE)`, `=VLOOKUP("${e.variable1Value}",DICTIONARY!A:B,2,FALSE)`]);
+    const VARIABLE2 = ITEM_VARIATION.map(e => [`=VLOOKUP("${e.variable2Name}",DICTIONARY!A:B,2,FALSE)`, `=VLOOKUP("${e.variable2Value}",DICTIONARY!A:B,2,FALSE)`]);
+
     const PROMOTION_PRICE = ITEM_VARIATION.map(e => [e.promotionPrice]);
 
     SHEET.getRange(`D${LAST_ROW+1}:D${LAST_ROW+NUMBER_OF_ITEM}`).setValues(SKU);

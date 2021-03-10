@@ -48,7 +48,7 @@ function getVaration(productObject) {
         productVariationUnit.variable2Name = getPropertyList()[1].type;
         productVariationUnit.variable2Value = getPropertyList()[1].dataList.filter(e => e.value == key2)[0].text;
         productVariationUnit.originalPrice = DATA.originalPrice[skuUnit].price;
-        productVariationUnit.promotionPrice = DATA.promotion.promoData[skuUnit][0].price;
+        productVariationUnit.promotionPrice = (DATA.promotion.promoData[skuUnit] !== undefined) ? DATA.promotion.promoData[skuUnit][0].price : DATA.originalPrice[skuUnit].price;
 
         variation.push(productVariationUnit);
     }
