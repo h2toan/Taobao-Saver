@@ -5,7 +5,7 @@
 })();
 
 async function sendDataToSheet() {
-    document.getElementById('sendDataTrigger').innerHTML = '<img src="chrome-extension://cooallhhldemmfihmjgeicfbncelhfog/img/loading.svg">';
+    document.getElementById('sendDataTrigger').innerHTML = `<img src="chrome-extension://hibcabekedaenkbmoofanlnilfmlpkpc/img/loading.svg">`;
     try {
         const PAY_LOAD = prepareProductItem();
         await fetch('https://script.google.com/macros/s/AKfycbyMgBYIEkjqgWCTS_v35feyNBC0JtBROS8dQsEuDrptg4yE1Lqmuykrjw/exec', {
