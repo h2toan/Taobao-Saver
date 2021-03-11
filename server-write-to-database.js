@@ -3,6 +3,7 @@ const TEST_PAYLOAD = JSON.parse('{"imageList":["https://img.alicdn.com/imgextra/
 const CONFIG = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('CONFIG').getRange('A:B').getValues();
 const DELIVERY_SERVICE_OPTION = CONFIG.filter((e, i) => i > 0 && i < 9).map(e => e[1]);
 const PRE_ORDER_DTS = [CONFIG[9][1]];
+const EXCHANGE_RATE = [CONFIG[0][1]];
 
 
 function writeToDatabase(PAYLOAD = TEST_PAYLOAD) {
@@ -24,7 +25,7 @@ function writeToDatabase(PAYLOAD = TEST_PAYLOAD) {
     const VARIATION_SKU = ITEM_VARIATION.map(e => [PAYLOAD.itemSku + e.sku.replace(/;$/g, "").replace(/;/g, "_")]);
     const VARIABLE1 = ITEM_VARIATION.map(e => [lookUp(e.variable1Name), lookUp(e.variable1Value),e.variable1ImageSrc]);
     const VARIABLE2 = ITEM_VARIATION.map(e => [lookUp(e.variable2Name), lookUp(e.variable2Value)]);
-    const PROMOTION_PRICE = ITEM_VARIATION.map(e => [e.promotionPrice]);
+    const PROMOTION_PRICE = ITEM_VARIATION.map(e => [`${+e.promotionPrice*+EXCHANGE_RATE}`]);
 
     DATABASE.getRange(`D${LAST_ROW+1}:D${LAST_ROW+NUMBER_OF_ITEM}`).setValues(ITEM_SKU);
     DATABASE.getRange(`E${LAST_ROW+1}:E${LAST_ROW+NUMBER_OF_ITEM}`).setValues(VARIATION_SKU);
