@@ -25,6 +25,7 @@ function prepareProductItem() {
     let productItem = {};
     productItem.imageList = getImageSrcList();
     productItem.variation = getVaration(g_config.sibRequest);
+    productItem.itemSku = getItemId();
 
     return productItem
 }
@@ -39,14 +40,15 @@ function getVaration(productObject) {
     for (let index = 0; index < SKU_KEY_NAMES.length; index++) {
         let productVariationUnit = {};
         const skuUnit = SKU_KEY_NAMES[index];
-        const key1 = skuUnit.split(';')[1];
-        const key2 = skuUnit.split(';')[2];
+        const key1 = skuUnit.split(';')[2];
+        const key2 = skuUnit.split(';')[1];
 
         productVariationUnit.sku = skuUnit;
-        productVariationUnit.variable1Name = getPropertyList()[0].type;
-        productVariationUnit.variable1Value = getPropertyList()[0].dataList.filter(e => e.value == key1)[0].text;
-        productVariationUnit.variable2Name = getPropertyList()[1].type;
-        productVariationUnit.variable2Value = getPropertyList()[1].dataList.filter(e => e.value == key2)[0].text;
+        productVariationUnit.variable1Name = getPropertyList()[0] ? getPropertyList()[0].type : "";
+        productVariationUnit.variable1Value = getPropertyList()[0] ? getPropertyList()[0].dataList.filter(e => e.value == key1)[0].text : "";
+        productVariationUnit.variable1ImageSrc = getPropertyList()[0].dataList[0].hasOwnProperty('imgSrc') ? getPropertyList()[0].dataList.filter(e => e.value == key1)[0].imgSrc : "";
+        productVariationUnit.variable2Name = getPropertyList()[1] ? getPropertyList()[1].type : "";
+        productVariationUnit.variable2Value = getPropertyList()[1] ? getPropertyList()[1].dataList.filter(e => e.value == key2)[0].text : "";
         productVariationUnit.originalPrice = DATA.originalPrice[skuUnit].price;
         productVariationUnit.promotionPrice = (DATA.promotion.promoData[skuUnit] !== undefined) ? DATA.promotion.promoData[skuUnit][0].price : DATA.originalPrice[skuUnit].price;
 
@@ -80,7 +82,7 @@ function getPropertyList() {
         }
         propertyList.push(property);
     }
-    return propertyList
+    return propertyList.reverse();
 }
 
 function getImageSrcList() {
@@ -92,4 +94,8 @@ function getImageSrcList() {
         SRC_LIST.push(SRC);
     }
     return SRC_LIST;
+}
+
+function getItemId() {
+    return location.search.match(/(?:id=)(\d+)/)[1];
 }
