@@ -49,8 +49,8 @@ function getVaration(productObject) {
         productVariationUnit.variable1ImageSrc = getPropertyList()[0].dataList[0].hasOwnProperty('imgSrc') ? getPropertyList()[0].dataList.filter(e => e.value == key1)[0].imgSrc : "";
         productVariationUnit.variable2Name = getPropertyList()[1] ? getPropertyList()[1].type : "";
         productVariationUnit.variable2Value = getPropertyList()[1] ? getPropertyList()[1].dataList.filter(e => e.value == key2)[0].text : "";
-        productVariationUnit.originalPrice = DATA.originalPrice[skuUnit].price;
-        productVariationUnit.promotionPrice = (DATA.promotion.promoData[skuUnit] !== undefined) ? DATA.promotion.promoData[skuUnit][0].price : DATA.originalPrice[skuUnit].price;
+        productVariationUnit.stock = SKU[skuUnit].stock;
+        productVariationUnit.price = (DATA.promotion.promoData[skuUnit] !== undefined) ? DATA.promotion.promoData[skuUnit][0].price : DATA.originalPrice[skuUnit].price;
 
         variation.push(productVariationUnit);
     }
