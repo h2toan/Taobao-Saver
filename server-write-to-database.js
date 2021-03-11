@@ -22,19 +22,10 @@ function writeToDatabase(PAYLOAD = TEST_PAYLOAD) {
     const ITEM_VARIATION = PAYLOAD.variation;
     updateDictionary(ITEM_VARIATION);
 
-    const VARIATION_SKU = ITEM_VARIATION.map(e => [PAYLOAD.itemSku + e.sku.replace(/;$/g, "").replace(/;/g, "_")]);
-    const VARIABLE1 = ITEM_VARIATION.map(e => [lookUp(e.variable1Name), lookUp(e.variable1Value), e.variable1ImageSrc]);
-    const VARIABLE2 = ITEM_VARIATION.map(e => [lookUp(e.variable2Name), lookUp(e.variable2Value)]);
-    const PROMOTION_PRICE = ITEM_VARIATION.map(e => [`${+e.price*+EXCHANGE_RATE}`]);
-    const STOCK = ITEM_VARIATION.map(e => [e.stock]);
+    const VARIATION = ITEM_VARIATION.map(e => [PAYLOAD.itemSku + e.sku.replace(/;$/g, "").replace(/;/g, "_"), lookUp(e.variable1Name), lookUp(e.variable1Value), e.variable1ImageSrc, lookUp(e.variable2Name), lookUp(e.variable2Value), `${+e.price*+EXCHANGE_RATE}`, e.stock, PAYLOAD.itemSku + e.sku.replace(/;$/g, "").replace(/;/g, "_")]);
 
     DATABASE.getRange(`D${LAST_ROW+1}:D${LAST_ROW+NUMBER_OF_ITEM}`).setValues(ITEM_SKU);
-    DATABASE.getRange(`E${LAST_ROW+1}:E${LAST_ROW+NUMBER_OF_ITEM}`).setValues(VARIATION_SKU);
-    DATABASE.getRange(`F${LAST_ROW+1}:H${LAST_ROW+NUMBER_OF_ITEM}`).setValues(VARIABLE1);
-    DATABASE.getRange(`I${LAST_ROW+1}:J${LAST_ROW+NUMBER_OF_ITEM}`).setValues(VARIABLE2);
-    DATABASE.getRange(`K${LAST_ROW+1}:K${LAST_ROW+NUMBER_OF_ITEM}`).setValues(PROMOTION_PRICE);
-    DATABASE.getRange(`L${LAST_ROW+1}:L${LAST_ROW+NUMBER_OF_ITEM}`).setValues(STOCK);
-    DATABASE.getRange(`M${LAST_ROW+1}:M${LAST_ROW+NUMBER_OF_ITEM}`).setValues(VARIATION_SKU);
+    DATABASE.getRange(`E${LAST_ROW+1}:M${LAST_ROW+NUMBER_OF_ITEM}`).setValues(VARIATION);
     DATABASE.getRange(`N${LAST_ROW+1}:N${LAST_ROW+NUMBER_OF_ITEM}`).setValues(IMAGE_SRC_COVER);
     DATABASE.getRange(`O${LAST_ROW+1}:V${LAST_ROW+NUMBER_OF_ITEM}`).setValues(IMAGE_SRC_LIST);
     DATABASE.getRange(`AA${LAST_ROW+1}:AH${LAST_ROW+NUMBER_OF_ITEM}`).setValues(new Array(NUMBER_OF_ITEM).fill(DELIVERY_SERVICE_OPTION));
