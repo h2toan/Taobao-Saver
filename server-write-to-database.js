@@ -10,26 +10,26 @@ function writeToDatabase(PAYLOAD = TEST_PAYLOAD) {
     const DATABASE = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Database');
     const LAST_ROW = DATABASE.getLastRow();
     const MAX_ROW = DATABASE.getMaxRows();
-    const NUMBER_OF_ITEM = PAYLOAD.variation.length;
+    const NUMBER_OF_VARIATION = PAYLOAD.variation.length;
     if (LAST_ROW == MAX_ROW) {
-        DATABASE.insertRowsAfter(LAST_ROW, NUMBER_OF_ITEM);
+        DATABASE.insertRowAfter(LAST_ROW);
     }
 
-    const IMAGE_SRC_LIST = new Array(NUMBER_OF_ITEM).fill(PAYLOAD.imageList.concat(Array(8 - PAYLOAD.imageList.length).fill('')));
-    const IMAGE_SRC_COVER = new Array(NUMBER_OF_ITEM).fill([PAYLOAD.imageList[0]]);
-    const ITEM_SKU = new Array(NUMBER_OF_ITEM).fill([PAYLOAD.itemSku]);
+    const IMAGE_SRC_LIST = new Array(NUMBER_OF_VARIATION).fill(PAYLOAD.imageList.concat(Array(8 - PAYLOAD.imageList.length).fill('')));
+    const IMAGE_SRC_COVER = new Array(NUMBER_OF_VARIATION).fill([PAYLOAD.imageList[0]]);
+    const ITEM_SKU = new Array(NUMBER_OF_VARIATION).fill([PAYLOAD.itemSku]);
 
     const ITEM_VARIATION = PAYLOAD.variation;
     updateDictionary(ITEM_VARIATION);
 
     const VARIATION = ITEM_VARIATION.map(e => [PAYLOAD.itemSku + e.sku.replace(/;$/g, "").replace(/;/g, "_"), lookUp(e.variable1Name), lookUp(e.variable1Value), e.variable1ImageSrc, lookUp(e.variable2Name), lookUp(e.variable2Value), `${+e.price*+EXCHANGE_RATE}`, e.stock, PAYLOAD.itemSku + e.sku.replace(/;$/g, "").replace(/;/g, "_")]);
 
-    DATABASE.getRange(`D${LAST_ROW+1}:D${LAST_ROW+NUMBER_OF_ITEM}`).setValues(ITEM_SKU);
-    DATABASE.getRange(`E${LAST_ROW+1}:M${LAST_ROW+NUMBER_OF_ITEM}`).setValues(VARIATION);
-    DATABASE.getRange(`N${LAST_ROW+1}:N${LAST_ROW+NUMBER_OF_ITEM}`).setValues(IMAGE_SRC_COVER);
-    DATABASE.getRange(`O${LAST_ROW+1}:V${LAST_ROW+NUMBER_OF_ITEM}`).setValues(IMAGE_SRC_LIST);
-    DATABASE.getRange(`AA${LAST_ROW+1}:AH${LAST_ROW+NUMBER_OF_ITEM}`).setValues(new Array(NUMBER_OF_ITEM).fill(DELIVERY_SERVICE_OPTION));
-    DATABASE.getRange(`AI${LAST_ROW+1}:AI${LAST_ROW+NUMBER_OF_ITEM}`).setValues(new Array(NUMBER_OF_ITEM).fill(PRE_ORDER_DTS));
+    DATABASE.getRange(`D${LAST_ROW+1}:D${LAST_ROW+NUMBER_OF_VARIATION}`).setValues(ITEM_SKU);
+    DATABASE.getRange(`E${LAST_ROW+1}:M${LAST_ROW+NUMBER_OF_VARIATION}`).setValues(VARIATION);
+    DATABASE.getRange(`N${LAST_ROW+1}:N${LAST_ROW+NUMBER_OF_VARIATION}`).setValues(IMAGE_SRC_COVER);
+    DATABASE.getRange(`O${LAST_ROW+1}:V${LAST_ROW+NUMBER_OF_VARIATION}`).setValues(IMAGE_SRC_LIST);
+    DATABASE.getRange(`AA${LAST_ROW+1}:AH${LAST_ROW+NUMBER_OF_VARIATION}`).setValues(new Array(NUMBER_OF_VARIATION).fill(DELIVERY_SERVICE_OPTION));
+    DATABASE.getRange(`AI${LAST_ROW+1}:AI${LAST_ROW+NUMBER_OF_VARIATION}`).setValues(new Array(NUMBER_OF_VARIATION).fill(PRE_ORDER_DTS));
 }
 
 function lookUp(string) {

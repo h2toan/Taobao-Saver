@@ -12,7 +12,7 @@ function updateDictionary(ITEM_VARIATION) {
     ]).filter(e => isChingChong(e[0]));
 
     if (LAST_ROW == MAX_ROW) {
-        DICTIONARY.insertRowsAfter(LAST_ROW, DATA.length);
+        DICTIONARY.insertRowAfter(LAST_ROW);
     }
 
     DICTIONARY.getRange(`A${LAST_ROW+1}:B${LAST_ROW+DATA.length}`).setValues(DATA);
