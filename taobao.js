@@ -1,11 +1,13 @@
 (function waitForDataReady() {
     if (g_config.sibRequest) {
-        document.getElementById("J_tbExtra").innerHTML += '<div id="sendDataTrigger" onclick="sendDataToSheet()" style="width:200px;text-align:center;padding:10px;background:#f44408;color:white;cursor:pointer;">Send This Item To Sheet</div>';
+        const UI_BOX = '<div id="sendTrigger" onclick="sendDataToSheet()" style="width:200px;text-align:center;padding:10px;background:#f44408;color:white;cursor:pointer;position:fixed;z-index:99;bottom:10px;">Send This Item To Sheet</div>'
+
+        document.getElementById("J_ShopInfo").innerHTML += UI_BOX;
     } else setTimeout(waitForDataReady, 5E3);
 })();
 
 async function sendDataToSheet() {
-    document.getElementById('sendDataTrigger').innerHTML = `<img src="chrome-extension://hibcabekedaenkbmoofanlnilfmlpkpc/img/loading.svg">`;
+    document.getElementById("sendTrigger").innerHTML = `<img src="chrome-extension://hibcabekedaenkbmoofanlnilfmlpkpc/img/loading.svg">`;
     try {
         const PAY_LOAD = prepareProductItem();
         await fetch('https://script.google.com/macros/s/AKfycbyMgBYIEkjqgWCTS_v35feyNBC0JtBROS8dQsEuDrptg4yE1Lqmuykrjw/exec', {
@@ -13,11 +15,11 @@ async function sendDataToSheet() {
             mode: 'no-cors',
             body: JSON.stringify(PAY_LOAD)
         });
-        document.getElementById('sendDataTrigger').innerHTML = "Data Sent!";
-        document.getElementById('sendDataTrigger').removeAttribute('onclick');
+        document.getElementById("sendTrigger").innerHTML = "Data Sent!";
+        document.getElementById("sendTrigger").removeAttribute('onclick');
     } catch (error) {
         console.log(error);
-        document.getElementById('sendDataTrigger').innerHTML = "Some Error Occurred";
+        document.getElementById("sendTrigger").innerHTML = "Some Error Occurred";
     }
 }
 
