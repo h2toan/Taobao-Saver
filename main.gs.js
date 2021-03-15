@@ -28,7 +28,7 @@ function writeToDatabase(PAYLOAD = TEST_PAYLOAD) {
     const DATA_TO_FILL = ITEM_VARIATION.map(e => {
         const VARIATION_SKU = ITEM_SKU + e.sku.replace(/;$/g, "").replace(/;/g, "_");
         const VARIABLE = [lookUp(e.variable1Name), lookUp(e.variable1Value), e.variable1ImageSrc, lookUp(e.variable2Name), lookUp(e.variable2Value)];
-        const VARIATION_PRICE = `${+e.price*+EXCHANGE_RATE}`;
+        const VARIATION_PRICE = Math.round((+e.price * +EXCHANGE_RATE)/1000)*1000;
         const VARIATION_STOCK = e.stock;
         const VARIATION_WEIGHT = "500";
         const VARIATION_LENGTH = "";
