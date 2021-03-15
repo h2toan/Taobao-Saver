@@ -1,14 +1,19 @@
 <link rel="stylesheet" href="./ui.css">
-<link rel="stylesheet" href="./jquery-ui-1.12.1.custom/jquery-ui.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="./jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-<div id="UI_BOX"><input id="itemCategoryId" class="autocomplete" placeholder="Ma nganh hang"><input id="itemName" placeholder="Ten san pham" onkeyup="wordCount('itemName')"><span id="itemNameWordCount">0</span><span>/120</span><textarea id="itemDescription" placeholder="Mo ta" onkeyup="wordCount('itemDescription')"><span id="itemDescriptionWordCount">0</span><span>/3000</span><div id="sendTrigger" onclick="sendDataToSheet()">Send This Item To Sheet</div></div>
+<link rel="stylesheet" href="./ext/jquery-ui.min.css">
+<script src="./ext/jquery.min.js"></script>
+<script src="./ext/jquery-ui.min.js"></script>
+<div id="UI_BOX"><input id="itemCategoryId" class="autocomplete" placeholder="Ma nganh hang"><input id="itemName"
+        placeholder="Ten san pham" onkeyup="wordCount('itemName')"><span
+        id="itemNameWordCount">0</span><span>/120</span><textarea id="itemDescription" placeholder="Mo ta"
+        onkeyup="wordCount('itemDescription')"></textarea><span id="itemDescriptionWordCount">0</span><span>/3000</span>
+    <div id="sendTrigger" onclick="sendDataToSheet()">Send This Item To Sheet</div>
+</div>
 
 <script>
     function wordCount(id) {
         document.getElementById(`${id}WordCount`).innerText = document.getElementById(`${id}`).value.length;
     }
-    $("input.autocomplete").autocomplete({
+    $("#itemCategoryId").autocomplete({
         source: [{
                 label: "16448 - Sức Khỏe & Sắc Đẹp/Dụng cụ làm đẹp/Chăm sóc móng",
                 value: "16448"
