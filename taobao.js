@@ -1,6 +1,6 @@
 (function waitForDataReady() {
     if (g_config.sibRequest) {
-        const UI_BOX = `<div id="UI_BOX"><input id="itemCategoryId" class="autocomplete" placeholder="Ma nganh hang"><input id="itemName" placeholder="Ten san pham" onkeyup="wordCount('itemName')"><span id="itemNameWordCount">0</span><span>/120</span><textarea id="itemDescription" placeholder="Mo ta" onkeyup="wordCount('itemDescription')"></textarea><span id="itemDescriptionWordCount" class="bottom-100px">0</span><span class="bottom-100px">/3000</span><div id="sendTrigger" onclick="sendDataToSheet()">Send This Item To Sheet</div></div>`
+        const UI_BOX = `<div id="UI_BOX"><input id="itemCategoryId" class="autocomplete" placeholder="Category ID" name="itemCategoryId"><input id="itemName" placeholder="Item Name" name="itemname" onkeyup="wordCount('itemName')"><span id="itemNameWordCount">0</span><span>/120</span><textarea id="itemDescription" placeholder="Description" name="itemdescription" onkeyup="wordCount('itemDescription')"></textarea><span id="itemDescriptionWordCount" class="bottom-100px">0</span><span class="bottom-100px">/3000</span><div id="sendTrigger" onclick="sendDataToSheet()">Send This Item To Sheet</div></div>`
         document.getElementById("J_ShopInfo").innerHTML += UI_BOX;
     } else setTimeout(waitForDataReady, 5E3);
 })();
