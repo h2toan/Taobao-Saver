@@ -1,52 +1,8 @@
-<style>
-    body {
-        background: rgb(184, 184, 184);
-    }
-
-    #sendTrigger {
-        width: 200px;
-        text-align: center;
-        padding: 10px;
-        background: #f44408;
-        color: white;
-        cursor: pointer;
-    }
-
-    #UI_BOX {
-        position: fixed;
-        z-index: 99;
-        bottom: 10px;
-        height: 300px;
-        background: white;
-        padding: 10px;
-        width: 220px;
-    }
-
-    #itemCategoryId,
-    #itemName,
-    #itemDescription {
-        display: inline-block;
-        margin: 10px 5px 10px 0px;
-        height: 30px;
-        width: 160px;
-    }
-
-    #UI_BOX>span {
-        font-size: 12px;
-    }
-</style>
+<link rel="stylesheet" href="./ui.css">
 <link rel="stylesheet" href="./jquery-ui-1.12.1.custom/jquery-ui.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="./jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-<div id="UI_BOX">
-    <input id="itemCategoryId" class="autocomplete" placeholder="Mã ngành hàng">
-    <input id="itemName" placeholder="Tên sản phẩm" onkeyup="wordCount('itemName')"><span
-        id="itemNameWordCount">0</span><span>/120</span>
-    <input id="itemDescription" placeholder="Mô tả" onkeyup="wordCount('itemDescription')"><span
-        id="itemDescriptionWordCount">0</span><span>/3000</span>
-    <div id="sendTrigger" onclick="sendDataToSheet()">
-        Send This Item To Sheet</div>
-</div>
+<div id="UI_BOX"><input id="itemCategoryId" class="autocomplete" placeholder="Ma nganh hang"><input id="itemName" placeholder="Ten san pham" onkeyup="wordCount('itemName')"><span id="itemNameWordCount">0</span><span>/120</span><textarea id="itemDescription" placeholder="Mo ta" onkeyup="wordCount('itemDescription')"><span id="itemDescriptionWordCount">0</span><span>/3000</span><div id="sendTrigger" onclick="sendDataToSheet()">Send This Item To Sheet</div></div>
 
 <script>
     function wordCount(id) {

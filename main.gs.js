@@ -15,6 +15,9 @@ function writeToDatabase(PAYLOAD = TEST_PAYLOAD) {
         DATABASE.insertRowAfter(LAST_ROW);
     }
 
+    const ITEM_CATEGORY_ID = PAYLOAD.itemCategoryId;
+    const ITEM_NAME = PAYLOAD.itemName;
+    const ITEM_DESCRIPTION = PAYLOAD.itemDescription;
     const IMAGE_SRC_LIST = PAYLOAD.imageList.concat(Array(8 - PAYLOAD.imageList.length).fill(''));
     const IMAGE_SRC_COVER = PAYLOAD.imageList[0];
     const ITEM_SKU = PAYLOAD.itemSku;
@@ -27,15 +30,15 @@ function writeToDatabase(PAYLOAD = TEST_PAYLOAD) {
         const VARIABLE = [lookUp(e.variable1Name), lookUp(e.variable1Value), e.variable1ImageSrc, lookUp(e.variable2Name), lookUp(e.variable2Value)];
         const VARIATION_PRICE = `${+e.price*+EXCHANGE_RATE}`;
         const VARIATION_STOCK = e.stock;
-        const VARIATION_WEIGHT = "";
+        const VARIATION_WEIGHT = "500";
         const VARIATION_LENGTH = "";
         const VARIATION_WIDTH = "";
         const VARIATION_HEIGHT = "";
 
-        return new Array().concat(ITEM_SKU, VARIATION_SKU, VARIABLE, VARIATION_PRICE, VARIATION_STOCK, VARIATION_SKU, IMAGE_SRC_COVER, IMAGE_SRC_LIST, VARIATION_WEIGHT, VARIATION_LENGTH, VARIATION_WIDTH, VARIATION_HEIGHT, DELIVERY_SERVICE_OPTION, PRE_ORDER_DTS)
+        return new Array().concat(ITEM_CATEGORY_ID, ITEM_NAME, ITEM_DESCRIPTION, ITEM_SKU, VARIATION_SKU, VARIABLE, VARIATION_PRICE, VARIATION_STOCK, VARIATION_SKU, IMAGE_SRC_COVER, IMAGE_SRC_LIST, VARIATION_WEIGHT, VARIATION_LENGTH, VARIATION_WIDTH, VARIATION_HEIGHT, DELIVERY_SERVICE_OPTION, PRE_ORDER_DTS)
     })
 
-    DATABASE.getRange(`D${LAST_ROW+1}:AI${LAST_ROW+NUMBER_OF_VARIATION}`).setValues(DATA_TO_FILL);
+    DATABASE.getRange(`A${LAST_ROW+1}:AI${LAST_ROW+NUMBER_OF_VARIATION}`).setValues(DATA_TO_FILL);
 }
 
 function lookUp(string) {

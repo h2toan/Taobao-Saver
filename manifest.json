@@ -28,7 +28,7 @@
         "https://script.google.com/*"
     ],
     "web_accessible_resources": [{
-        "resources": ["taobao.js", "tmall.js", "img/loading.svg"],
+        "resources": ["taobao.js", "tmall.js", "img/loading.svg", "ui.css"],
         "matches": ["*://*.taobao.com/*", "*://*.tmall.com/*"],
         "extension_ids": ["hibcabekedaenkbmoofanlnilfmlpkpc"],
         "use_dynamic_url": true

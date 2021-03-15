@@ -1,7 +1,6 @@
 (function waitForDataReady() {
     if (g_config.sibRequest) {
-        const UI_BOX = '<div id="sendTrigger" onclick="sendDataToSheet()" style="width:200px;text-align:center;padding:10px;background:#f44408;color:white;cursor:pointer;position:fixed;z-index:99;bottom:10px;">Send This Item To Sheet</div>'
-
+        const UI_BOX = `<div id="UI_BOX"><input id="itemCategoryId" class="autocomplete" placeholder="Ma nganh hang"><input id="itemName" placeholder="Ten san pham" onkeyup="wordCount('itemName')"><span id="itemNameWordCount">0</span><span>/120</span><textarea id="itemDescription" placeholder="Mo ta" onkeyup="wordCount('itemDescription')"></textarea><span id="itemDescriptionWordCount" class="bottom-100px">0</span><span class="bottom-100px">/3000</span><div id="sendTrigger" onclick="sendDataToSheet()">Send This Item To Sheet</div></div>`
         document.getElementById("J_ShopInfo").innerHTML += UI_BOX;
     } else setTimeout(waitForDataReady, 5E3);
 })();
@@ -24,11 +23,14 @@ async function sendDataToSheet() {
 }
 
 function prepareProductItem() {
-    let productItem = {};
-    productItem.imageList = getImageSrcList();
-    productItem.variation = getVaration(g_config.sibRequest);
-    productItem.itemSku = getItemId();
-
+    let productItem = {
+        itemCategoryId: document.getElementById('itemCategoryId').value,
+        itemName: document.getElementById('itemName').value,
+        itemDescription: document.getElementById('itemDescription').value,
+        itemSku: getItemId(),
+        imageList: getImageSrcList(),
+        variation: getVaration(g_config.sibRequest)
+    };
     return productItem
 }
 
@@ -100,4 +102,8 @@ function getImageSrcList() {
 
 function getItemId() {
     return location.search.match(/(?:id=)(\d+)/)[1];
+}
+
+function wordCount(id) {
+    document.getElementById(`${id}WordCount`).innerText = document.getElementById(`${id}`).value.length;
 }

@@ -1,0 +1,42 @@
+#sendTrigger {
+    width: 200px;
+    text-align: center;
+    padding: 10px;
+    background: #f44408;
+    color: white;
+    cursor: pointer;
+}
+
+#UI_BOX {
+    position: fixed;
+    z-index: 99;
+    bottom: 10px;
+    height: 300px;
+    background: #b708004d;
+    padding: 10px;
+    width: 220px;
+}
+
+#itemCategoryId,
+#itemName,
+#itemDescription {
+    display: inline-block;
+    margin: 10px 5px 10px 0px;
+    height: 30px;
+    width: 160px;
+    padding-left: 5px;
+}
+
+#itemDescription {
+    height: 130px;
+    resize: none;
+}
+
+#UI_BOX>span {
+    font-size: 12px;
+}
+
+#UI_BOX .bottom-100px {
+    position: relative;
+    bottom: 100px;
+}
