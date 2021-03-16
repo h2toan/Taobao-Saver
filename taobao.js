@@ -1,6 +1,6 @@
 (function waitForDataReady() {
     if (g_config.sibRequest) {
-        const UI_BOX = `<div id="UI_BOX"><input id="itemCategoryId" class="autocomplete" placeholder="Category ID" name="itemCategoryId"><input id="itemName" placeholder="Item Name" name="itemname" onkeyup="wordCount('itemName')"><span id="itemNameWordCount">0</span><span>/120</span><textarea id="itemDescription" placeholder="Description" name="itemdescription" onkeyup="wordCount('itemDescription')"></textarea><span id="itemDescriptionWordCount" class="bottom-100px">0</span><span class="bottom-100px">/3000</span><div id="sendTrigger" onclick="sendDataToSheet()">Send This Item To Sheet</div></div>`
+        const UI_BOX = `<div id="UI_BOX"><input id="itemCategoryId" class="autocomplete" placeholder="Category ID" name="itemCategoryId"><input id="itemName" placeholder="Item Name" name="itemname" onkeyup="wordCount('itemName')"><span id="itemNameWordCount">0</span><span>/120</span><textarea id="itemDescription" placeholder="Description" name="itemdescription" onkeyup="wordCount('itemDescription')"></textarea><span id="itemDescriptionWordCount" class="bottom-100px">0</span><span class="bottom-100px">/3000</span><div id="sendTrigger" onclick="sendDataToSheet()">Send This Item To Sheet</div></div>`;
         document.getElementById("detail").innerHTML += UI_BOX;
     } else setTimeout(waitForDataReady, 5E3);
 })();
@@ -19,7 +19,7 @@ async function sendDataToSheet() {
     } catch (error) {
         console.log(error);
         document.getElementById("sendTrigger").innerHTML = "Some Error Occurred";
-    }
+    };
 }
 
 function prepareProductItem() {
@@ -29,13 +29,13 @@ function prepareProductItem() {
         itemDescription: document.getElementById('itemDescription').value,
         itemSku: getItemId(),
         imageList: getImageSrcList(),
-        variation: getVaration(g_config.sibRequest)
+        variation: getVaration()
     };
-    return productItem
+    return productItem;
 }
 
-function getVaration(productObject) {
-    const DATA = productObject.data;
+function getVaration() {
+    const DATA = g_config.sibRequest.data;
     const SKU = DATA.dynStock.sku;
     const SKU_KEY_NAMES = Object.keys(SKU);
 
@@ -57,8 +57,8 @@ function getVaration(productObject) {
         productVariationUnit.price = (DATA.promotion.promoData[skuUnit] !== undefined) ? DATA.promotion.promoData[skuUnit][0].price : DATA.originalPrice[skuUnit].price;
 
         variation.push(productVariationUnit);
-    }
-    return variation
+    };
+    return variation;
 }
 
 function getPropertyList() {
@@ -80,12 +80,12 @@ function getPropertyList() {
 
             if (PROPERTY_NODE_LI.childNodes[1].style.backgroundImage !== "") {
                 dataValueMap.imgSrc = location.protocol + PROPERTY_NODE_LI.childNodes[1].style.backgroundImage.match(/\/\/.+\.jpg(?=_)/)[0];
-            }
+            };
 
             property.dataList.push(dataValueMap);
-        }
+        };
         propertyList.push(property);
-    }
+    };
     return propertyList.reverse();
 }
 
@@ -96,7 +96,7 @@ function getImageSrcList() {
     for (let index = 0; index < IMAGE_NODE_LIST.length; index++) {
         const SRC = IMAGE_NODE_LIST[index].src.replace(/_\d+x\d+\.jpg.*/, '');
         SRC_LIST.push(SRC);
-    }
+    };
     return SRC_LIST;
 }
 
@@ -105,5 +105,5 @@ function getItemId() {
 }
 
 function wordCount(id) {
-    document.getElementById(`${id}WordCount`).innerText = document.getElementById(`${id}`).value.length;
+    return document.getElementById(`${id}WordCount`).innerText = document.getElementById(`${id}`).value.length;
 }

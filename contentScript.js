@@ -5,7 +5,9 @@
             getCSS(chrome.runtime.getURL('ui.css'));
             return
         case 'detail.tmall.com':
-            return getScript(chrome.runtime.getURL('tmall.js'));
+            getScript(chrome.runtime.getURL('tmall.js'));
+            getCSS(chrome.runtime.getURL('ui.css'));
+            return
         default:
             break;
     }
