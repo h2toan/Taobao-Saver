@@ -63,7 +63,7 @@ function getVaration() {
 
 function getPropertyList() {
     let propertyList = [];
-    const PROPERTY_UL_LIST = document.querySelectorAll("#J_isku>div>dl>dd>ul");
+    const PROPERTY_UL_LIST = document.querySelectorAll("ul.J_TSaleProp");
 
     for (let index = 0; index < PROPERTY_UL_LIST.length; index++) {
         const PROPERTY_NODE_UL = PROPERTY_UL_LIST[index];

@@ -10,12 +10,13 @@
             return
         default:
             break;
-    }
+    };
 })()
 
 function getScript(src) {
     let script = document.createElement("script");
     script.src = src;
+    script.type = "module";
     return document.getElementsByTagName("head")[0].appendChild(script);
 }
 
