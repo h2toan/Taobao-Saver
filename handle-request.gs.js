@@ -20,5 +20,5 @@ function handleRequest(e) {
 
     } finally {
         lock.releaseLock();
-    }
+    };
 }

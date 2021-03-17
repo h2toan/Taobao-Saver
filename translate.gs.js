@@ -13,7 +13,7 @@ function updateDictionary(ITEM_VARIATION) {
 
     if (LAST_ROW == MAX_ROW) {
         DICTIONARY.insertRowAfter(LAST_ROW);
-    }
+    };
 
     DICTIONARY.getRange(`A${LAST_ROW+1}:B${LAST_ROW+DATA.length}`).setValues(DATA);
     DICTIONARY.getRange('A:B').removeDuplicates([1]);
