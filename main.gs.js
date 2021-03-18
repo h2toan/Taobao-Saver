@@ -4,6 +4,7 @@ const CONFIG = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('CONFIG').ge
 const DELIVERY_SERVICE_OPTION = CONFIG.filter((e, i) => i > 0 && i < 9).map(e => e[1]);
 const PRE_ORDER_DTS = [CONFIG[9][1]];
 const EXCHANGE_RATE = [CONFIG[0][1]];
+const DESCRIPTION_SUFFIX = [CONFIG[10][1]];
 
 
 function writeToDatabase(PAYLOAD = TEST_PAYLOAD) {
@@ -17,7 +18,7 @@ function writeToDatabase(PAYLOAD = TEST_PAYLOAD) {
 
     const ITEM_CATEGORY_ID = PAYLOAD.itemCategoryId;
     const ITEM_NAME = PAYLOAD.itemName;
-    const ITEM_DESCRIPTION = PAYLOAD.itemDescription;
+    const ITEM_DESCRIPTION = PAYLOAD.itemDescription + '\n\n' + DESCRIPTION_SUFFIX;
     const IMAGE_SRC_LIST = PAYLOAD.imageList.concat(Array(8 - PAYLOAD.imageList.length).fill(''));
     const IMAGE_SRC_COVER = PAYLOAD.imageList[0];
     const ITEM_SKU = PAYLOAD.itemSku;
@@ -28,7 +29,7 @@ function writeToDatabase(PAYLOAD = TEST_PAYLOAD) {
     const DATA_TO_FILL = ITEM_VARIATION.map(e => {
         const VARIATION_SKU = ITEM_SKU + e.sku.replace(/;$/g, "").replace(/;/g, "_");
         const VARIABLE = [lookUp(e.variable1Name), lookUp(e.variable1Value), e.variable1ImageSrc, lookUp(e.variable2Name), lookUp(e.variable2Value)];
-        const VARIATION_PRICE = Math.round((+e.price * +EXCHANGE_RATE)/1000)*1000;
+        const VARIATION_PRICE = Math.round((+e.price * +EXCHANGE_RATE) / 1000) * 1000;
         const VARIATION_STOCK = e.stock;
         const VARIATION_WEIGHT = "500";
         const VARIATION_LENGTH = "";
