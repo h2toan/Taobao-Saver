@@ -41,11 +41,11 @@ function writeToDatabase(PAYLOAD = TEST_PAYLOAD) {
     const VARIATION_SKU =
       ITEM_SKU + e.sku.replace(/;$/g, "").replace(/;/g, "_");
     const VARIABLE = [
-      lookUp(e.variable1Name),
-      lookUp(e.variable1Value),
+      e.variable1Name,
+      e.variable1Value,
       e.variable1ImageSrc,
-      lookUp(e.variable2Name),
-      lookUp(e.variable2Value),
+      e.variable2Name,
+      e.variable2Value,
     ];
     const VARIATION_PRICE =
       Math.round((+e.price * +EXCHANGE_RATE) / 1000) * 1000;

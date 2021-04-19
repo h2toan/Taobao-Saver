@@ -5635,7 +5635,7 @@ export default class SurfAndSave {
     try {
       const PAY_LOAD = this.prepareProductItem();
       await fetch(
-        "https://script.google.com/macros/s/AKfycbwr8-0NYVE-eHb6gPnf-JDm1tHS3tyuuqbIL6kn-bVtqRHhSZuUk8mzu-0zWX0k9I8UEA/exec",
+        "https://script.google.com/macros/s/AKfycbzYwJNirra9hD8q9S9h74ZafuhZfLg1tMwWnQeDuJ7QBiSRwGhz-bufrCfoBoduRBdUxw/exec",
         {
           method: "POST",
           mode: "no-cors",
@@ -5714,21 +5714,22 @@ export default class SurfAndSave {
       property.type = PROPERTY_NODE_UL.dataset.property;
       property.dataList = [];
 
-      for (let i = 0; i < PROPERTY_NODE_UL.childElementCount; i++) {
-        const PROPERTY_NODE_LI = PROPERTY_NODE_UL.children[i];
+      for (let i = 0; i < PROPERTY_NODE_UL.querySelectorAll("li").length; i++) {
+        const PROPERTY_NODE_LI = PROPERTY_NODE_UL.querySelectorAll("li")[i];
+        console.log(PROPERTY_NODE_LI);
         let dataValueMap = {
           value: PROPERTY_NODE_LI.dataset.value,
           text: PROPERTY_NODE_LI.childNodes[1].childNodes[1].textContent,
-        };
-
-        if (PROPERTY_NODE_LI.childNodes[1].style.backgroundImage !== "") {
-          dataValueMap.imgSrc =
+          imgSrc:
+            PROPERTY_NODE_LI.childNodes[1].style.backgroundImage &&
             location.protocol +
-            PROPERTY_NODE_LI.childNodes[1].style.backgroundImage.match(
-              /\/\/.+\.jpg(?=_)/
-            )[0];
-        }
-
+              PROPERTY_NODE_LI.childNodes[1].style.backgroundImage.match(
+                /(\/\/.+\.)(jpg|png)(\_.+)/
+              )[1] +
+              PROPERTY_NODE_LI.childNodes[1].style.backgroundImage.match(
+                /(\/\/.+\.)(jpg|png)(\_.+)/
+              )[2],
+        };
         property.dataList.push(dataValueMap);
       }
       propertyList.push(property);
